@@ -1,13 +1,14 @@
 {
-  "homepage":"http:https://atilimkoca.github.io/ikcuailab",
+  "homepage": "http:https://atilimkoca.github.io/dataset-website",
   "name": "dataset-website",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "start":"npm run dev",
-    "deploy": "vite build && gh-pages -d dist",
+    "serve": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview"
