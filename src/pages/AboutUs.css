@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
 /* AboutUs.css */
-body, html {
+html, body {
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Disable horizontal scrolling */
+  overflow: hidden; /* Disable scrolling on html and body */
+  height: 100%;
 }
 
 /* Make sure .about-us-page does not scroll */
@@ -69,15 +70,16 @@ body {
 }
 
 .about-us-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  scroll-snap-type: y mandatory; /* Enable vertical snapping */
+  overflow-y: scroll; /* Enable scrolling */
+  height: 100vh; /* Full viewport height */
+  scroll-behavior: smooth; /* Smooth scrolling */
 }
 
 /* Fullscreen section styling with background images */
 .section {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh; /* Full viewport height */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -86,11 +88,25 @@ body {
   background-repeat: no-repeat;
   color: #fff;
   position: relative;
+  scroll-snap-align: start; /* Snap to start of each section */
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.6s ease, transform 0.6s ease;
 }
 
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.section .overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4); /* Dark overlay */
+  z-index: 1;
+}
 /* Overlay for readability */
 .section::before {
   content: '';
@@ -108,27 +124,23 @@ body {
   z-index: 2;
   text-align: center;
   padding: 2rem;
-  max-width: 1000px;
+  max-width: 800px;
   opacity: 1;
 }
 
 .section h2 {
-  font-size: 6rem;
-  font-weight: 600;
+  font-size: 3.5rem;
+  font-weight: 700;
   margin-bottom: 1rem;
-  
 }
 
 .section-text {
-  font-size: 2.6rem;  /* Larger section content */
-  line-height: 1.8;
+  font-size: 1.5rem;
+  line-height: 1.6;
   opacity: 1;
 }
  
-.section.visible {
-  opacity: 0.6;
-  transform: translateY(0);
-}
+
 
 /* Card Container */
 .card-container {
@@ -137,7 +149,11 @@ body {
   justify-content: center;
   flex-wrap: wrap;
 }
-
+@supports not (scroll-snap-type: y mandatory) {
+  .section {
+    margin-bottom: 100vh; /* Adds space between sections if scroll-snap is not supported */
+  }
+}
 /* Card Style */
 .card-section {
   position: relative;
@@ -162,11 +178,13 @@ body {
   background-position: center;
   border-radius: 10px;
   overflow: hidden;
-  transition: transform 0.3s ease;
-  opacity: 1 !important; /* Ensure full opacity */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  opacity: 1 !important;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 .card:hover {
-  transform: scale(1.05); /* Slightly scale up on hover */
+  transform: scale(1.05); /* Zoom on hover */
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
 }
 
 .card-overlay {
@@ -175,7 +193,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.3); /* Light overlay */
+  background-color: rgba(0, 0, 0, 0.6); /* Darker overlay */
   color: #fff;
   display: flex;
   flex-direction: column;
@@ -183,21 +201,18 @@ body {
   justify-content: center;
   text-align: center;
   padding: 1rem;
-  opacity: 1; /* Ensure full opacity */
-  transition: all 0.3s ease;
+  transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 .card-title {
   font-size: 1.8rem;
   font-weight: bold;
-  margin-bottom: 0;
-  transition: all 0.3s ease;
+  margin-bottom: 0.5rem;
 }
 
 .card-content {
   font-size: 1rem;
   line-height: 1.4;
-  margin-top: 0.5rem;
   opacity: 0;
   max-height: 0;
   transition: opacity 0.3s ease, max-height 0.3s ease;
@@ -232,91 +247,98 @@ body {
 }
 
 /* Map styling for contact section */
-.map {
-  width: 700px;
-  height: 380px;
-  margin: 0 auto;
-  box-shadow: 0 0 40px -10px black;
-  background: rgb(240, 240, 240);
-  font-family: 'Montserrat', sans-serif;
-  max-width: calc(100vw - 60px);
+.contact-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
+  border-radius: 12px; /* Add a slight roundness */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+  max-width: 1000px; /* Optional: control max width */
+  margin: 0 auto; /* Center on the page */
 }
 
-#map {
-  width: 65%;
-  height: 380px;
-  display: inline-block;
-}
-
-/* Container for contact information */
-.map-c {
-  float: right;
-  width: 35%;
-  height: 100%;
-  padding: 25px;
-  box-sizing: border-box;
-  background: rgba(255, 255, 255, 0.9); /* White background with slight opacity */
-  color: #333; /* Darker text for better readability */
-  border-radius: 8px; /* Rounded corners */
-}
-
-/* Text styles */
-.map-c h1 {
-  margin: 0;
-  font-weight: bold;
+.contact-section h2 {
+  font-size: 3rem;
+  font-weight: 700;
   color: #333;
-  font-size: 24px;
+  margin-bottom: 1.5rem;
+}
+/* Container for map and contact info */
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+  width: 100%;
 }
 
-.map-c p {
-  font-size: 14px;
-  margin-top: 15px;
-  margin-bottom: 20px;
+/* Map styling */
+#map {
+  flex: 1;
+  min-width: 300px;
+  height: 400px;
+  background: lightgray; /* Placeholder color for the map */
+  border-radius: 12px; /* Optional rounded corners */
+}
+
+/* Contact Info styling */
+.contact-info {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #333;
+  background: rgba(255, 255, 255, 0.9); /* Slightly opaque background for text area */
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for contrast */
+}
+
+.contact-info h3 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.contact-info p, .contact-info address {
+  font-size: 1.1rem;
+  line-height: 1.6;
   color: #555;
+  margin-bottom: 1rem;
 }
 
-.det {
-  font-size: 14px;
-  margin-bottom: 15px;
-  color: #555;
-}
-
-i {
-  float: left;
-  font-size: 18px;
-  margin: 0 8px 0 0;
-  color: #007bff; /* Icon color */
-}
-
-.map-c a {
+.contact-info a {
   color: #007bff;
   text-decoration: none;
+  font-weight: 500;
 }
 
-.map-c a:hover {
+.contact-info a:hover {
   text-decoration: underline;
 }
 
-/* Button styles */
-button {
-  margin: 15px 4px;
-  padding: 10px 12px;
-  display: inline-block;
-  cursor: pointer;
-  background: none;
-  color: #007bff;
-  border: 2px solid #007bff;
-  transition: all 0.3s;
-  border-radius: 8px;
-  outline: 0;
-  font-size: 14px;
-  text-align: center;
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  #map {
+    border-right: none;
+    border-bottom: 2px solid #e0e0e0;
+    width: 100%;
+    height: 300px;
+  }
 }
 
-button:hover {
-  background-color: #007bff;
-  color: #fff;
-}
+/* Button styles */
+
 
 /* Button labels */
 button:after {
@@ -330,6 +352,23 @@ button:after {
 .fa-envelope:after {
   content: 'Email';
   margin: 8px 13px 0;
+}
+@media (max-width: 768px) {
+  .section h2 {
+    font-size: 2.5rem;
+  }
+  .section-text {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .section h2 {
+    font-size: 2rem;
+  }
+  .section-text {
+    font-size: 1rem;
+  }
 }
 
 @media only screen and (max-width: 720px) {

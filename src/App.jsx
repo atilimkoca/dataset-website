@@ -5,21 +5,25 @@ import Navbar from './components/Navbar';
 import Home from './pages/Home';
 import About from './pages/AboutUs';
 import Dataset from './pages/Dataset';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 // import Dataset from './pages/Dataset';
 // import Contact from './pages/Contact';
 
 function App() {
   return (
-    <Router basename="/dataset-website"> {/* Add basename */}
+    <div className="app-wrapper">
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/dataset" element={<Dataset />} />
-      </Routes>
-    </Router>
+      <main>
+        <Routes>
+          <Route path="/dataset-website" element={<div className="home-page"><Home /></div>} />
+          <Route path="/dataset-website/about" element={<About />} />
+          <Route path="/dataset-website/dataset" element={<Dataset />} />
+          
+          {/* <Route path="/dataset" element={<Dataset />} />
+          <Route path="/contact" element={<Contact />} /> */}
+        </Routes>
+      </main>
+    </div>
   );
 }
 

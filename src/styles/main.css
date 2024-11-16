@@ -116,9 +116,8 @@ html, body {
   width: 100vw;
   position: relative;
   display: flex;
-  align-items: center; /* Centers content vertically */
-  /* Compensate for navbar */
-  padding-top: 70px; /* Add padding for navbar */
+  align-items: center;
+  padding-top: 70px;
   background: #fff;
   overflow: hidden;
   box-sizing: border-box;
@@ -128,17 +127,15 @@ html, body {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: 100%; /* Full height */
-  display: flex; /* Enable flexbox */
-  align-items: center; /* Center content vertically */
+  height: 100%;
+  display: flex;
+  align-items: center;
   overflow: hidden;
 }
 
 .hero-content {
   max-width: 700px;
   padding-left: 2rem;
-  margin: 0;
-  transform: translateY(0);
 }
 
 #homepage-hero h1 {
@@ -147,7 +144,6 @@ html, body {
   font-weight: 700;
   color: #333;
   margin-bottom: 1rem;
-  letter-spacing: -0.02em;
   line-height: 1.2;
   text-align: left;
   animation: fadeInUp 0.8s ease-out forwards;
@@ -165,10 +161,10 @@ html, body {
   font-weight: 300;
   color: #666;
   line-height: 1.6;
-  max-width: 1800px;
+  max-width: 100%; /* Adjusted max-width */
   text-align: left;
   animation: fadeInUp 0.8s ease-out 0.2s forwards;
-  opacity: 0;
+  opacity: 1; /* Ensure it's fully visible */
 }
 
 /* Particles */
@@ -246,27 +242,19 @@ main {
   
   #homepage-hero p {
     font-size: 1.25rem;
-  }
-
-  .nav-links {
-    gap: 1rem;
-  }
-  
-  .brand-text {
-    display: none;
-  }
-
-  .container {
-    padding: 0 1rem;
+    line-height: 1.4;
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 460px) {
   #homepage-hero h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
   
   #homepage-hero p {
-    font-size: 1.1rem;
+    font-size: 1rem;
+    line-height: 1.4;
+    max-width: 90%; /* Adjusted max-width for smaller screens */
   }
 }
+

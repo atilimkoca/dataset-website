@@ -13,15 +13,21 @@ import support from '../assets/images/support.png';
 import focus_area from '../assets/images/key_focus_areas_image.png';
 import glucose2 from '../assets/images/glucose_prediction_image.png';
 import './AboutUs.css';
+import L from 'leaflet';
 
-
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+  iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+  iconRetinaUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon-2x.png',
+  shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+});
 function useOnScreen(ref) {
   const [isIntersecting, setIntersecting] = useState(false);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => setIntersecting(entry.isIntersecting),
-      { threshold: 0.5 }
+      { threshold: 0.8 } // Trigger animations closer to full view
     );
     if (ref.current) observer.observe(ref.current);
     return () => observer.disconnect();
@@ -111,23 +117,29 @@ function AboutUs() {
     {
       title: 'Contact Us',
       content: (
-        <div className="map">
-          <div id="map"></div>
-          <div className="map-c">
-            <h1>IKCU AI Lab</h1>
-            <p>Pioneering AI Research in Healthcare at Izmir Katip Celebi University.</p>
-            <div className="det"><i className="fa fa-map-marker"></i> Izmir Katip Celebi University, Faculty of Engineering and Architecture, Lab HZ 44</div>
-            <div className="det"><i className="fa fa-envelope"></i> <a href="mailto:ikcuailab@gmail.com">ikcuailab@gmail.com</a></div>
-            <center>
-              <button className="fa fa-car"></button>
-              <button className="fa fa-envelope"></button>
-            </center>
-          </div>
+        <div className="contact-section">
+      
+      <div className="contact-container">
+        <div id="map"></div>
+        <div className="contact-info">
+          <h3>IKCU AI Lab</h3>
+          <p>Pioneering AI Research in Healthcare at Izmir Katip Celebi University.</p>
+          <address>
+            Izmir Katip Celebi University,<br />
+            Faculty of Engineering and Architecture,<br />
+            Lab HZ 44
+          </address>
+          <p>
+            <strong>Email:</strong> <a href="mailto:ikcuailab@gmail.com">ikcuailab@gmail.com</a>
+          </p>
         </div>
+      </div>
+    </div>
       ),
       backgroundImage: glucose2, // Optional: Background image if desired
     },
   ];
+  
   useEffect(() => {
     // Load Google Maps API and initialize map if the contact section is visible
     const loadGoogleMaps = () => {
@@ -178,8 +190,9 @@ function Section({ title, content, backgroundImage }) {
     <div
       ref={ref}
       className={`section ${isVisible ? 'visible' : ''}`}
-      style={{ backgroundImage: `url(${backgroundImage})` }} // Set background image correctly
+      style={{ backgroundImage: `url(${backgroundImage})` }}
     >
+      <div className="overlay"></div> {/* Added overlay */}
       <div className="section-content">
         <h2>{title}</h2>
         <div className="section-text">{content}</div>

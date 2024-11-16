@@ -19,10 +19,10 @@ const Navbar = () => {
         </Link>
 
         <div className="nav-links">
-          <Link to="/" className={`nav-link ${isActive('/')}`}>Home</Link>
-          <Link to="/about" className={`nav-link ${isActive('/about')}`}>About</Link>
+          <Link to="/dataset-website/" className={`nav-link ${isActive('/home')}`}>Home</Link>
+          <Link to="/dataset-website/about" className={`nav-link ${isActive('/about')}`}>About</Link>
 
-          <Link to="/dataset" className={`nav-link ${isActive('/dataset')}`}>Dataset</Link>
+          <Link to="/dataset-website/dataset" className={`nav-link ${isActive('/dataset')}`}>Dataset</Link>
 
         </div>
       </div>
